@@ -1,0 +1,17 @@
+# Secrets
+/config/device_config.py
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env/
+.python-version
+
