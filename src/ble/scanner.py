@@ -1,5 +1,5 @@
 import asyncio
-from bleak import BleakScanner, BleakClient
+from bleak import BleakClient
 from config.device_config import DEVICE_CONFIG
 
 
@@ -37,19 +37,3 @@ async def connect(device_address):
 
 
 asyncio.run(connect(device_address))
-
-
-#    await client.is_connected():
-#        print("conncected")
-
-
-# async def ad_scanner():
-#    def callback(device, advertisement):
-#        if device.address == device_address:
-#            print(f"test: {advertisement.service_uuids[0]}")
-#
-#    async with BleakScanner(callback):
-#        print("Listening...")
-#        await asyncio.Event().wait()
-#
-# asyncio.run(ad_scanner())
