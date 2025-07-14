@@ -12,7 +12,15 @@ async def connect(device_address):
     while True:
         print("Listening...")
         try:
-            async with BleakClient(device_address, timeout=15.0) as client:
+            disconnected_event = asyncio.Event()
+
+            def on_disconnect(client):
+                print(f"connection to {client} lost")
+                disconnected_event.set()
+
+            async with BleakClient(
+                device_address, disconnected_callback=on_disconnect, timeout=15.0
+            ) as client:
                 print(f"connected to {client}")
 
                 def callback(sender, data):
@@ -23,7 +31,7 @@ async def connect(device_address):
                 await client.start_notify(HR_CHAR_UUID, callback)
                 print("Listening for HR data...")
 
-                await asyncio.Event().wait()
+                await disconnected_event.wait()
         except Exception as e:
             print(f"{e}")
 
