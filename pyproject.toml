@@ -7,7 +7,12 @@ requires-python = ">=3.10"
 dependencies = [
     "asyncio>=3.4.3",
     "bleak>=1.0.1",
+    "thread6>=0.2.0",
 ]
 
 [tool.setuptools]
 packages = ["src", "config",]
+
+[build-system]
+requires = ["setuptools>=64.0.0"]
+build-backend = "setuptools.build_meta"

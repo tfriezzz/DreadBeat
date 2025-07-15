@@ -84,16 +84,18 @@ wheels = [
 [[package]]
 name = "dreadbeat"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "asyncio" },
     { name = "bleak" },
+    { name = "thread6" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "asyncio", specifier = ">=3.4.3" },
     { name = "bleak", specifier = ">=1.0.1" },
+    { name = "thread6", specifier = ">=0.2.0" },
 ]
 
 [[package]]
@@ -165,6 +167,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/1b/79/f905f22b976e222a50d49e85fbd7f32d97e8790dd80a55f3f0c305305c32/pyobjc_framework_libdispatch-11.1-cp313-cp313t-macosx_10_13_universal2.whl", hash = "sha256:a9357736cb47b4a789f59f8fab9b0d10b0a9c84f9876367c398718d3de085888", size = 15912, upload-time = "2025-06-14T20:51:00.572Z" },
     { url = "https://files.pythonhosted.org/packages/ee/b0/225a3645ba2711c3122eec3e857ea003646643b4122bd98db2a8831740ff/pyobjc_framework_libdispatch-11.1-cp314-cp314-macosx_11_0_universal2.whl", hash = "sha256:cd08f32ea7724906ef504a0fd40a32e2a0be4d64b9239530a31767ca9ccfc921", size = 15655, upload-time = "2025-06-14T20:51:01.655Z" },
     { url = "https://files.pythonhosted.org/packages/e2/b5/ff49fb81f13c7ec48cd7ccad66e1986ccc6aa1984e04f4a78074748f7926/pyobjc_framework_libdispatch-11.1-cp314-cp314t-macosx_11_0_universal2.whl", hash = "sha256:5d9985b0e050cae72bf2c6a1cc8180ff4fa3a812cd63b2dc59e09c6f7f6263a1", size = 15920, upload-time = "2025-06-14T20:51:02.407Z" },
+]
+
+[[package]]
+name = "thread6"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/39/f2/cd7b53367c00a0e4a37c53c5b18007a50fb66f19331699c894c918230b8b/thread6-0.2.0.tar.gz", hash = "sha256:ed7a398e7f4d7fcedfcbc689ed3ef11179b040ead277ba15a6b316ff7d4d1b81", size = 3583, upload-time = "2018-08-18T16:35:23.366Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f0/46/3a1220d4f933c1a2b4eba2d0d9306cac0ba0d758a9c3958a4213edba6866/thread6-0.2.0-py3-none-any.whl", hash = "sha256:618037241f4a486940ca8e9c1f8cb0a476473c6036dc10a717c1ff5fbdabd7fc", size = 4199, upload-time = "2018-08-18T16:35:21.946Z" },
 ]
 
 [[package]]

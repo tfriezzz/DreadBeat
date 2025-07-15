@@ -27,6 +27,7 @@ async def connect(device_address):
                     received_data = list(data)
                     hr = received_data[1]
                     print(f"current: {hr}")
+                    return hr
 
                 await client.start_notify(HR_CHAR_UUID, callback)
                 print("Listening for HR data...")
@@ -36,4 +37,5 @@ async def connect(device_address):
             print(f"{e}")
 
 
-asyncio.run(connect(device_address))
+if __name__ == "__main__":
+    asyncio.run(connect(device_address))
