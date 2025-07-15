@@ -8,34 +8,48 @@ HR_SERVICE_UUID = "0000180d-0000-1000-8000-00805f9b34fb"  # Heart Rate Service
 HR_CHAR_UUID = "00002a37-0000-1000-8000-00805f9b34fb"  # Heart Rate Measurement
 
 
-async def connect(device_address):
-    while True:
-        print("Listening...")
-        try:
-            disconnected_event = asyncio.Event()
+class BLEScanner:
+    def __init__(self, device_address):
+        self.device_address = device_address
+        self.hr = "no_data"
+        self.loop = asyncio.new_event_loop()
 
-            def on_disconnect(client):
-                print(f"connection to {client} lost")
-                disconnected_event.set()
+    async def connect(self):
+        while True:
+            print("Listening...")
+            try:
+                disconnected_event = asyncio.Event()
 
-            async with BleakClient(
-                device_address, disconnected_callback=on_disconnect, timeout=15.0
-            ) as client:
-                print(f"connected to {client}")
+                def on_disconnect(client):
+                    print(f"connection to {client} lost")
+                    disconnected_event.set()
 
-                def callback(sender, data):
-                    received_data = list(data)
-                    hr = received_data[1]
-                    print(f"current: {hr}")
-                    return hr
+                async with BleakClient(
+                    self.device_address,
+                    disconnected_callback=on_disconnect,
+                    timeout=15.0,
+                ) as client:
+                    print(f"connected to {client}")
 
-                await client.start_notify(HR_CHAR_UUID, callback)
-                print("Listening for HR data...")
+                    def callback(sender, data):
+                        received_data = list(data)
+                        hr = received_data[1]
+                        print(f"current: {hr}")
+                        self.hr = hr
 
-                await disconnected_event.wait()
-        except Exception as e:
-            print(f"{e}")
+                    await client.start_notify(HR_CHAR_UUID, callback)
+                    print("Listening for HR data...")
+                    await disconnected_event.wait()
+
+            except Exception as e:
+                print(f"{e}")
+                await asyncio.sleep(1)
+
+    def ble_run(self):
+        # asyncio.run(self.connect)
+        self.loop.run_until_complete(self.connect())
 
 
 if __name__ == "__main__":
-    asyncio.run(connect(device_address))
+    ble_test = BLEScanner(device_address)
+    ble_test.ble_run()
