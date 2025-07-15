@@ -6,28 +6,36 @@ if sys.platform == "linux":
     libx11.XInitThreads()
 
 
-import asyncio
-import bleak
+# import asyncio
+# import bleak
 import tkinter
 import threading
-from src.ble.scanner import *
+from src.ble.scanner import BLEScanner
+from config.device_config import DEVICE_CONFIG
 
-test_ble = connect("FB:44:08:78:C4:61")
+test_ble = BLEScanner(DEVICE_CONFIG["device_mac"])
 
 
 root = tkinter.Tk()
 root.title("DreadBeat")
+root.geometry("300x150")
 
 
-hr_label = tkinter.Label(root, text="Heart Rate")
+hr_value = tkinter.StringVar(value="waiting")
+tkinter.Label(root, text="Heart Rate").pack()
+hr_label = tkinter.Label(root, textvariable=hr_value)
 hr_label.pack()
-# hr_data_label = tkinter.Label(root, text=f"test {hr}")
+
+
+def update_gui():
+    hr_value.set(test_ble.hr)
+    root.after(500, update_gui)
 
 
 def run_ble():
-    asyncio.run(test_ble)
+    test_ble.ble_run()
 
 
-threading.Thread(target=run_ble).start()
-
+threading.Thread(target=run_ble, daemon=True).start()
+update_gui()
 root.mainloop()
