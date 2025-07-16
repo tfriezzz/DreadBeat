@@ -20,10 +20,12 @@ def main():
     canvas = tk.Canvas(root, width="300", height="150", bg="black")
     canvas.pack()
 
-    test_scanner = BLEScanner(my_device)
-
     # test_ekg = EKGMonitor(root, canvas, test_scanner.hr)
-    test_ekg = EKGMonitor(root, canvas, "120")
+    test_ekg = EKGMonitor(root, canvas)
+    test_scanner = BLEScanner(
+        my_device,
+        test_ekg,
+    )
     test_ekg.run()
 
     threading.Thread(target=test_scanner.run, daemon=True).start()
