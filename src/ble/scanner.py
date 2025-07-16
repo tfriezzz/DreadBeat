@@ -45,11 +45,11 @@ class BLEScanner:
                 print(f"{e}")
                 await asyncio.sleep(1)
 
-    def ble_run(self):
+    def run(self):
         # asyncio.run(self.connect)
         self.loop.run_until_complete(self.connect())
 
 
 if __name__ == "__main__":
     ble_test = BLEScanner(device_address)
-    ble_test.ble_run()
+    ble_test.run()
