@@ -11,8 +11,9 @@ HR_CHAR_UUID = "00002a37-0000-1000-8000-00805f9b34fb"  # Heart Rate Measurement
 class BLEScanner:
     def __init__(self, device_address):
         self.device_address = device_address
-        self.hr = "no_data"
+        self.hr = "0"
         self.loop = asyncio.new_event_loop()
+        self.is_transmitting = False
 
     async def connect(self):
         while True:
@@ -22,6 +23,8 @@ class BLEScanner:
 
                 def on_disconnect(client):
                     print(f"connection to {client} lost")
+                    self.is_transmitting = False
+                    print(f"on_disconnect, is_transmitting = {self.is_transmitting}")
                     disconnected_event.set()
 
                 async with BleakClient(
@@ -35,6 +38,8 @@ class BLEScanner:
                         received_data = list(data)
                         hr = received_data[1]
                         print(f"current: {hr}")
+                        self.is_transmitting = True
+                        print(f"callback, is_transmitting = {self.is_transmitting}")
                         self.hr = hr
 
                     await client.start_notify(HR_CHAR_UUID, callback)

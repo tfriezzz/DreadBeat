@@ -9,6 +9,7 @@ if sys.platform == "linux":
 import tkinter as tk
 import threading
 from config.device_config import DEVICE_CONFIG
+
 from src.ble.scanner import BLEScanner
 from src.ui.ekg import EKGMonitor
 
@@ -21,10 +22,12 @@ def main():
 
     test_scanner = BLEScanner(my_device)
 
-    test_ekg = EKGMonitor(root, canvas)
+    # test_ekg = EKGMonitor(root, canvas, test_scanner.hr)
+    test_ekg = EKGMonitor(root, canvas, "120")
     test_ekg.run()
 
     threading.Thread(target=test_scanner.run, daemon=True).start()
+    # print(f"test: {test_ekg.heart_rate}")
 
     root.mainloop()
 
